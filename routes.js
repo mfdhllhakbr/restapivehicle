@@ -1,8 +1,12 @@
 'use strict'
 
 module.exports = function(app){
-    var json = require('./controller');
+    var jsonku = require('./controller');
 
     app.route('/')
-        .get(json.index);
+        .get(jsonku.index);
+    
+    //Menampilkan seluruh data Kendaraan dalam Group Nested
+    app.route('/alldatavehicle')
+        .get(jsonku.ambilDataKendaraan);
 }

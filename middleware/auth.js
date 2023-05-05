@@ -5,7 +5,7 @@ var response = require('../res');
 var jwt = require('jsonwebtoken');
 var config = require('../config/secret');
 
-// register user
+// Registrasi User
 exports.register = function(req, res){
     var post = {
         name: req.body.name,
@@ -16,13 +16,16 @@ exports.register = function(req, res){
     var query = "INSERT INTO ?? SET ?";
     var table = ["users"];
     query = mysql.format(query, table);
-    connection.query(query, post, function(err, rows){
-        if (err) throw err
-        response.ok("Success Create A New User", res)
+    connection.query(query, post, function(error, rows){
+        if (error){
+            console.log(error)
+        } else{
+            response.ok("User Baru Teregistrasi", res)
+        }
     });
 }
 
-// login user
+// Login User
 exports.login = function(req, res){
     var post = {
         name: req.body.name,
@@ -37,7 +40,7 @@ exports.login = function(req, res){
         if (err) throw err;
         if (rows.length == 1){
             var token = jwt.sign({rows}, config.secret, {
-                expiresIn: 300 // 300 seconds, just to make sure is it expired soon
+                expiresIn: 1440
             });
             user_id = rows[0].id;
 
@@ -50,13 +53,12 @@ exports.login = function(req, res){
                 if(err) throw err;
                  res.json({
                     success: true,
-                    message: "Token Generated.",
                     token: token,
                     current_user: data.user_id
                  });
             });
         } else {
-            response.bad("User Not Found or Wrong Password.", res);
+            response.bad("Email atau Password anda salah!", res);
         }
     });
 }
@@ -68,7 +70,7 @@ exports.getAllUser = function(req, res){
 
     connection.query("SELECT * FROM users", (err, rows, fields) => {
         if (err) throw err;
-        response.paginate(rows, res, page, limit);
+        response.ok(rows, res, page, limit);
     });
 }
 
@@ -77,7 +79,7 @@ exports.deleteUser = function(req, res){
     var id = req.body.id;
     connection.query("DELETE FROM users WHERE id=?", [id], (err, rows, fields) => {
         if (err) throw err;
-        response.ok("Success Delete Data User ID: " + id, res)
+        response.paginates("Success Delete Data User ID: " + id, res)
     });
 }
 
@@ -155,7 +157,7 @@ exports.getVehiclesTypeBrandID = function(req, res){
     var id = req.params.id;
     connection.query("SELECT * FROM vehicle_type WHERE brand_id=?", [id], function(err, rows){
         if (err) throw err;
-        response.paginate(rows, res, page, limit);
+        response.ok(rows, res, page, limit);
     });
 }
 
@@ -226,7 +228,7 @@ exports.getVehiclesModelTypeID = function(req, res){
     var id = req.params.id;
     connection.query("SELECT * FROM vehicle_model WHERE type_id=?", id, function(err, rows){
         if (err) throw err;
-        response.paginate(rows, res, page, limit)
+        response.ok(rows, res, page, limit)
     });
 }
 

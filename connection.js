@@ -1,16 +1,16 @@
 var mysql = require('mysql');
 
-// dbvehicle connection
+// Koneksi Database
 const conn = mysql.createConnection({
     host : 'localhost',
     user : 'root',
     password : '',
-    database : 'dbvehicle'
+    database : 'db_vehicle'
 });
 
 conn.connect( (err) => {
     if (err) throw err;
-    console.log("Connect Success");
+    console.log("Koneksi Database Sukses");
 })
 
 module.exports = conn;

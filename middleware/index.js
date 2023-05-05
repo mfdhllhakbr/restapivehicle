@@ -3,8 +3,8 @@ var auth = require('./auth');
 const verification = require('./verification');
 var route = express.Router();
 
-route.post('/api/v1/register', auth.register);
-route.post('/api/v1/login', auth.login);
+route.post('/api/register', auth.register);
+route.post('/api/login', auth.login);
 
 // get all user (*ADMIN)
 route.get('/users', verification(1), auth.getAllUser);
@@ -12,7 +12,6 @@ route.get('/users', verification(1), auth.getAllUser);
 // delete user (*ADMIN)
 route.delete('/users/delete', verification(1), auth.deleteUser);
 
-//-----------------------------------------------------------------------------------BRAND
 // get all vehicle brand
 route.get('/vehicle/brand', verification(), auth.getAllVehicleBrand);
 
@@ -25,7 +24,6 @@ route.patch('/vehicle/brand/patch', verification(1), auth.patchVehiclesBrand);
 // delete vehicle brand (*ADMIN)
 route.delete('/vehicle/brand/delete', verification(1), auth.deleteVehiclesBrand);
 
-//------------------------------------------------------------------------------------TYPE
 // get all types from each brand
 route.get('/vehicle/type/brand', verification(), auth.getAllVehicleTypeGroup);
 
@@ -44,7 +42,6 @@ route.patch('/vehicle/type/patch', verification(1), auth.patchVehiclesType);
 // delete vehicle brand (*ADMIN)
 route.delete('/vehicle/type/delete', verification(1), auth.deleteVehiclesType);
 
-//------------------------------------------------------------------------------------MODEL
 // get vehicle model
 route.get('/vehicle/model', verification(), auth.getVehiclesModel);
 
@@ -60,7 +57,6 @@ route.patch('/vehicle/model/patch', verification(1), auth.patchVehiclesModel);
 // delete vehicle model (*ADMIN)
 route.delete('/vehicle/model/delete', verification(1), auth.deleteVehiclesModel);
 
-//------------------------------------------------------------------------------------YEAR
 // get vehicle year
 route.get('/vehicle/year', verification(), auth.getVehiclesYear);
 
@@ -76,7 +72,6 @@ route.patch('/vehicle/year/patch', verification(1), auth.patchVehiclesYear);
 // delete vehicle year (*ADMIN)
 route.delete('/vehicle/year/delete', verification(1), auth.deleteVehiclesYear);
 
-//------------------------------------------------------------------------------------PRICELIST
 // get vehicle pricelist
 route.get('/vehicle/pricelist', verification(), auth.getPricelist);
 

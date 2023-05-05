@@ -15,6 +15,6 @@ routes(app);
 // group of auth endpoint route, including users and vehicle
 app.use('/auth', require('./middleware'));
 
-app.listen(4000, () => {
-    console.log(`Server started on port`);
+app.listen(3000, () => {
+    console.log('Server started on port');
 });
